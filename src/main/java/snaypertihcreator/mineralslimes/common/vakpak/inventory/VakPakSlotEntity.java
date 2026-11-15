@@ -8,10 +8,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import snaypertihcreator.mineralslimes.common.ModTags;
+import snaypertihcreator.mineralslimes.MineralSlimes;
 import snaypertihcreator.mineralslimes.common.vakpak.vacuum.VakPakVacuumContext;
 
 import java.util.Objects;
@@ -74,7 +76,7 @@ public final class VakPakSlotEntity extends VakPakSlot{
     }
 
     public static boolean canCreateFromEntity(Entity entity) {
-        return entity.getType().is(ModTags.Entities.VAKED);
+        return entity.getType().is(ModTags.Entities.VAKED) || (entity instanceof Slime);
     }
 
     public static VakPakSlotEntity createFromEntity(Entity entity) {
@@ -85,7 +87,7 @@ public final class VakPakSlotEntity extends VakPakSlot{
 
     @Override
     public boolean canStackEntity(Entity entity) {
-        return entity.getType().is(ModTags.Entities.VAKED) && canStackWith(entity.getType()) && count() < MAX_COUNT;
+        return (entity.getType().is(ModTags.Entities.VAKED) || (entity instanceof Slime)) && canStackWith(entity.getType()) && count() < MAX_COUNT && (entity instanceof Slime slime_entity && entityData.contains("Size") ? slime_entity.getSize() == (entityData.getInt("Size") + 1) : true);
     }
 
     @Override
@@ -104,7 +106,7 @@ public final class VakPakSlotEntity extends VakPakSlot{
     public static VakPakSlotEntity createFromBlock(VakPakVacuumContext ctx) { return null; }
 
     public boolean canStackWith(EntityType<?> type) {
-        return entityData.getString("id").equals(EntityType.getKey(type).toString());
+	return entityData.getString("id").equals(EntityType.getKey(type).toString());
     }
     public boolean tryStack(int amount) {
         if (count + amount > MAX_COUNT) return false;

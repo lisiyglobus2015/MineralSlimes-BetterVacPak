@@ -17,7 +17,8 @@ public enum VakPakUpgradeType implements StringRepresentable {
     LIQUID_SLOT("liquid_slot", 1),
     WORLD_HARVEST("world_harvest", 1),
     PULSE_WAVE("pulse_wave", 1),
-    LOOT_MUL("loot_mult", 3);
+    LOOT_MUL("loot_mult", 3),
+    STRONG_VACUUMING("strong_vacuuming", 1);
 
     private static final IntFunction<VakPakUpgradeType> BY_ID =
             ByIdMap.continuous(VakPakUpgradeType::ordinal, values(), ByIdMap.OutOfBoundsStrategy.ZERO);

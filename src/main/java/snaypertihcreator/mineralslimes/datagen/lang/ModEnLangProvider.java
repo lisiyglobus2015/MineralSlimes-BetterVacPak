@@ -59,6 +59,7 @@ public class ModEnLangProvider extends LanguageProvider {
                 case WORLD_HARVEST -> "World Harvest";
                 case PULSE_WAVE   -> "Pulse Wave";
                 case LOOT_MUL     -> "Loot Multiplier";
+		case STRONG_VACUUMING -> "Strong Vacuuming";
             });
             add(type.levelName(0), switch (type) {
                 case SLOT_STACK   -> "Slot Stack %s/%s";
@@ -67,6 +68,7 @@ public class ModEnLangProvider extends LanguageProvider {
                 case WORLD_HARVEST -> "World Harvest %s/%s";
                 case PULSE_WAVE   -> "Pulse Wave %s/%s";
                 case LOOT_MUL     -> "Loot Multiplier %s/%s";
+		case STRONG_VACUUMING -> "Strong Vacuuming %s/%s";
             });
         }
 

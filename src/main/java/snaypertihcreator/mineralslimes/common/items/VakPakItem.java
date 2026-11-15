@@ -12,6 +12,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.monster.Spider;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -29,6 +31,7 @@ import snaypertihcreator.mineralslimes.common.vakpak.vacuum.IVakPakVacuumReactab
 import snaypertihcreator.mineralslimes.common.vakpak.vacuum.IVakPakVacuumReactableBlock;
 import snaypertihcreator.mineralslimes.common.vakpak.vacuum.VakPakBlockVacuumRegistry;
 import snaypertihcreator.mineralslimes.common.vakpak.vacuum.VakPakVacuumContext;
+import snaypertihcreator.mineralslimes.common.vakpak.upgrade.VakPakUpgradeType;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -124,17 +127,22 @@ public final class VakPakItem extends Item implements GeoItem {
 
         for (Entity entity : targetEntities) {
             if (!inventory.canVacuumEntity(entity, upgrades)) continue;
-
+	//    if (!upgrades.has(VakPakUpgradeType.STRONG_VACUUMING) && (entity instanceof Spider || (entity instanceof Slime slime_entity && !(slime_entity.getSize() <3)))) continue;
             pullEntityTowardsPlayer(entity, eyePos);
 
             if (entity instanceof ItemEntity ie) ie.setPickUpDelay(10);
 
             double absorbRadiusSqr = Mth.square(ABSORB_DISTANCE + entity.getBbWidth() * 0.5);
-            if (entity.getBoundingBox().distanceToSqr(eyePos) <= absorbRadiusSqr)
+            if (entity.getBoundingBox().distanceToSqr(eyePos) <= absorbRadiusSqr) {
+		if (entity instanceof Spider) {
+		  if (upgrades.has(VakPakUpgradeType.STRONG_VACUUMING)) entity.discard();
+		  continue;
+		}
                 if (inventory.tryVacuumEntity(entity, upgrades)) inventoryChanged = true;
         }
 
         if (inventoryChanged) stack.set(ModDataComponents.VAKPAK_INVENTORY, inventory);
+    }
     }
 
     private static boolean vacuumTargetedBlock(Level level, @NotNull Player player, VakPakInventory inventory, VakPakUpgrades upgrades) {

@@ -3,12 +3,15 @@ package snaypertihcreator.mineralslimes.common.vakpak.inventory;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.monster.Spider;
+import net.minecraft.world.entity.monster.Slime;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 import snaypertihcreator.mineralslimes.common.vakpak.upgrade.VakPakUpgradeType;
 import snaypertihcreator.mineralslimes.common.vakpak.upgrade.VakPakUpgrades;
 import snaypertihcreator.mineralslimes.common.vakpak.vacuum.VakPakVacuumContext;
+import snaypertihcreator.mineralslimes.MineralSlimes;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -88,8 +91,11 @@ public final class VakPakInventory {
     }
 
     public boolean canVacuumEntity(Entity entity, @Nullable VakPakUpgrades upgrades) {
-        for (VakPakSlot slot : slots)
+	if (entity instanceof Spider && upgrades.has(VakPakUpgradeType.STRONG_VACUUMING)) return true;
+	if (entity instanceof Slime slime_entity && (upgrades.has(VakPakUpgradeType.STRONG_VACUUMING) || slime_entity.getSize() <3)) return true;
+	for (VakPakSlot slot : slots) {
             if (!slot.isEmpty() && slot.canStackEntity(entity)) return true;
+	}
         for (VakPakSlotType type : VakPakSlotType.allTypes()) {
             if (!type.canCreateFromEntity(entity)) continue;
             if (!type.canCreateWith(upgrades)) continue;

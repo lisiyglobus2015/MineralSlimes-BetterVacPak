@@ -29,5 +29,10 @@ public class ModRecipeProvider extends RecipeProvider {
                 new VakPakUpgradeRecipe(List.of(Ingredient.of(Items.WATER_BUCKET)), VakPakUpgradeType.LIQUID_SLOT, 1),
                 null // без advancement
         );
+	output.accept(
+                modLoc("vakpak_upgrade/strong_vacuuming"),
+                new VakPakUpgradeRecipe(List.of(Ingredient.of(Items.GLOWSTONE_DUST)), VakPakUpgradeType.STRONG_VACUUMING, 1),
+                null // без advancement
+        );
     }
 }
