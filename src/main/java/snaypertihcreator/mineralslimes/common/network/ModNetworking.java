@@ -2,15 +2,21 @@ package snaypertihcreator.mineralslimes.common.network;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import snaypertihcreator.mineralslimes.MineralSlimes;
 import snaypertihcreator.mineralslimes.common.ModDataComponents;
+import snaypertihcreator.mineralslimes.common.ModTags;
+import snaypertihcreator.mineralslimes.common.blocks.CorralBlock;
+import snaypertihcreator.mineralslimes.common.blocks.InductorBlock;
 import snaypertihcreator.mineralslimes.common.vakpak.inventory.VakPakInventory;
 import snaypertihcreator.mineralslimes.common.items.VakPakItem;
 
