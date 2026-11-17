@@ -92,7 +92,7 @@ public final class VakPakInventory {
 
     public boolean canVacuumEntity(Entity entity, @Nullable VakPakUpgrades upgrades) {
 	if (entity instanceof Spider && upgrades.has(VakPakUpgradeType.STRONG_VACUUMING)) return true;
-	if (entity instanceof Slime slime_entity && (upgrades.has(VakPakUpgradeType.STRONG_VACUUMING) || slime_entity.getSize() <3)) return true;
+	if (entity instanceof Slime slime_entity && !upgrades.has(VakPakUpgradeType.STRONG_VACUUMING) && !(slime_entity.getSize() <3)) return false;
 	for (VakPakSlot slot : slots) {
             if (!slot.isEmpty() && slot.canStackEntity(entity)) return true;
 	}
