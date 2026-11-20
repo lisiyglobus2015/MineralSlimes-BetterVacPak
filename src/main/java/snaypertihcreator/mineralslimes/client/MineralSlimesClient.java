@@ -1,6 +1,7 @@
 package snaypertihcreator.mineralslimes.client;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -18,17 +19,18 @@ import org.jetbrains.annotations.NotNull;
 import snaypertihcreator.mineralslimes.MineralSlimes;
 import snaypertihcreator.mineralslimes.client.block.CorralRenderer;
 import snaypertihcreator.mineralslimes.client.block.InductorRenderer;
+import snaypertihcreator.mineralslimes.client.entity.QuantumSlimeRenderer;
 import snaypertihcreator.mineralslimes.client.entity.SlimeRenderer;
 import snaypertihcreator.mineralslimes.client.item.VakPakRenderer;
 import snaypertihcreator.mineralslimes.client.models.FenceModelRegister;
 import snaypertihcreator.mineralslimes.client.models.VakPakModel;
 import snaypertihcreator.mineralslimes.client.texture.AnimatedTextureManager;
 import snaypertihcreator.mineralslimes.common.blockentity.ModBlockEntity;
+import snaypertihcreator.mineralslimes.common.entity.ModEntities;
 import snaypertihcreator.mineralslimes.common.entity.ModSlimes;
-import snaypertihcreator.mineralslimes.common.fance.ModPartTypes;
 import snaypertihcreator.mineralslimes.common.items.ModItems;
 
-import static snaypertihcreator.mineralslimes.client.models.FenceModelRegister.modelKey;
+import static snaypertihcreator.mineralslimes.MineralSlimes.modLoc;
 
 @Mod(value = MineralSlimes.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = MineralSlimes.MODID, value = Dist.CLIENT)
@@ -54,6 +56,9 @@ public class MineralSlimesClient {
             if (slime.defaultRender()) event.registerEntityRenderer(slime.entityType(),
                         context -> new SlimeRenderer<>(context, slime.slimeType()));
 
+        event.registerEntityRenderer(ModSlimes.QUANTUM.entityType(), QuantumSlimeRenderer::new);
+        event.registerEntityRenderer(ModEntities.WATER_BULLET.get(), ThrownItemRenderer::new);
+
         event.registerBlockEntityRenderer(ModBlockEntity.CORRAL_BE.get(), CorralRenderer::new);
         event.registerBlockEntityRenderer(ModBlockEntity.INDUCTOR_BE.get(), InductorRenderer::new);
     }
@@ -76,7 +81,10 @@ public class MineralSlimesClient {
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
         event.enqueueWork(() ->
-                AnimatedTextureManager.registerAll(VakPakModel.TEXTURE_USED, VakPakModel.TEXTURE_SHOT));
+                AnimatedTextureManager.registerAll(
+                        VakPakModel.TEXTURE_USED, VakPakModel.TEXTURE_SHOT,
+                        modLoc("textures/entity/quantum_slime.png")
+                ));
     }
 
     @SubscribeEvent

@@ -25,8 +25,7 @@ out vec4 vertexColor;
 out vec4 lightMapColor;
 out vec4 overlayColor;
 out vec2 texCoord0;
-out vec3 viewPos;
-out vec3 viewNormal;
+out vec3 vPos;
 
 void main() {
     gl_Position = ProjMat * ModelViewMat * vec4(Position, 1.0);
@@ -37,6 +36,5 @@ void main() {
     overlayColor = texelFetch(Sampler1, UV1, 0);
     texCoord0 = UV0;
 
-    viewPos = Position;
-    viewNormal = Normal;
+    vPos = Position;
 }
